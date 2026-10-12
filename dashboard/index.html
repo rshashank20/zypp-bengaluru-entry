@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zypp Electric | Bengaluru Fleet Sizing Stress Test</title>
+<style>
+:root{--bg:#f5f7fa;--surface:#fff;--ink:#17212f;--muted:#5f6b7a;--line:#dbe2ea;--blue:#2457a7;--teal:#177f72;--amber:#a45c07;--red:#a9302c;--softblue:#e8effb;--softteal:#e5f4f0;--softamber:#fff4df;--softred:#fae9e7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:1120px;margin:auto;padding:28px 22px 54px}header{padding:7px 0 22px;border-bottom:1px solid var(--line)}.kicker{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue);font-weight:700}h1{font-size:clamp(28px,4vw,40px);line-height:1.15;letter-spacing:-1px;margin:9px 0 10px}h2{font-size:22px;letter-spacing:-.3px;margin:36px 0 12px}h3{font-size:16px;margin:0 0 10px}.sub{color:var(--muted);max-width:850px;margin:0}.notice{background:var(--softamber);border:1px solid #ecd29c;border-radius:10px;padding:13px 15px;margin:20px 0;color:#5d420c}.notice strong{color:#382808}.verdict{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:10px;padding:18px 20px;margin:22px 0}.verdict .label{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--blue);font-weight:700}.verdict p{margin:7px 0 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}.card,.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:17px}.metric .lbl{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}.metric .val{font-size:27px;line-height:1.2;font-weight:750;margin:8px 0 4px;letter-spacing:-.5px}.metric .small{font-size:13px;color:var(--muted)}.blue{color:var(--blue)}.teal{color:var(--teal)}.amber{color:var(--amber)}.red{color:var(--red)}.panel{margin:12px 0}.chartnote{color:var(--muted);font-size:13px;margin:-2px 0 14px}.barrow{display:grid;grid-template-columns:190px 1fr 100px;align-items:center;gap:12px;margin:13px 0}.barlabel{font-size:13px;color:#354254}.track{height:20px;background:#e9edf3;border-radius:5px;overflow:hidden}.fill{height:100%;border-radius:5px;background:var(--blue)}.fill.teal{background:var(--teal)}.fill.amber{background:#d48a22}.fill.red{background:#c4514b}.barval{text-align:right;font-variant-numeric:tabular-nums;font-size:13px;font-weight:700}.callout{background:var(--softblue);border:1px solid #c7d7f3;border-radius:8px;padding:14px 16px;margin-top:16px}.callout p{margin:0}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}table{border-collapse:collapse;width:100%;font-size:14px}th,td{text-align:left;padding:10px 9px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);background:#f8fafc}td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.tag{display:inline-block;border-radius:50px;padding:3px 8px;font-size:11px;font-weight:700;background:#edf1f6;color:#435064}.tag.assumption{background:var(--softamber);color:#704708}.tag.public{background:var(--softteal);color:#11665c}.gate{border-top:3px solid var(--blue)}.gate h3{margin-top:6px}.gate p{font-size:14px;color:var(--muted);margin:6px 0}.footnote{font-size:12px;color:var(--muted)}a{color:var(--blue);overflow-wrap:anywhere}footer{border-top:1px solid var(--line);margin-top:38px;padding-top:18px;color:var(--muted);font-size:12px}.sources li{margin:7px 0}.sources{padding-left:20px}
+@media(max-width:700px){.wrap{padding:20px 14px 42px}.barrow{grid-template-columns:1fr 84px;gap:7px}.barlabel{grid-column:1/-1}.track{grid-column:1}.barval{grid-column:2;grid-row:2}.twocol{grid-template-columns:1fr}td,th{padding:8px 6px;font-size:12px}}
+</style>
+</head>
+<body><div class="wrap">
+<header>
+  <div class="kicker">Independent market-entry case · October 2026</div>
+  <h1>Could Bengaluru support a 10,000-scooter fleet?</h1>
+  <p class="sub">An outside-in stress test of delivery demand and per-scooter costs for Zypp Electric. Public figures are separated from analyst assumptions; this is not Zypp's internal plan or forecast.</p>
+</header>
+<div class="notice"><strong>Date matters:</strong> Zypp's 10,000-scooter Bengaluru announcement was made on <strong>2 May 2023</strong>, when 2,000 scooters were already deployed and 8,000 more were planned over the next two months. This dashboard treats 10,000 as a historical scenario benchmark—not a current confirmed target. <a href="https://indianexpress.com/article/business/startups/zypp-electric-e-scooters-bengaluru-next-2-months-8586983/">Source: Indian Express/PTI</a></div>
+<div class="verdict"><div class="label">What I would recommend</div><p><strong>Don't approve a 10,000-scooter expansion from this model alone.</strong> The reference EV's partial cost model is attractive, but the market-size result depends on assumed city demand, third-party fleet penetration and delivery productivity. Validate contracted demand by zone, then release additional vehicles in small tranches against observed contribution and utilization.</p></div>
+
+<h2>Base-case snapshot</h2>
+<div class="grid">
+  <div class="card metric"><div class="lbl">Modeled demand · TAM</div><div class="val blue">1.69M</div><div class="small">delivery-leg proxies per day</div></div>
+  <div class="card metric"><div class="lbl">Serviceable market · SAM</div><div class="val blue">507K</div><div class="small">legs/day via assumed 30% third-party share</div></div>
+  <div class="card metric"><div class="lbl">Modeled Zypp share · SOM</div><div class="val teal">~110K</div><div class="small">legs/day; calibrated, not independently measured</div></div>
+  <div class="card metric"><div class="lbl">Fleet equivalent for SOM</div><div class="val teal">~4,978</div><div class="small">at 26 deliveries/day and 85% availability</div></div>
+  <div class="card metric"><div class="lbl">EV reference cost</div><div class="val teal">₹2.22/km</div><div class="small">vs ₹4.17/km petrol reference</div></div>
+  <div class="card metric"><div class="lbl">Annual cost gap</div><div class="val teal">₹49,700</div><div class="small">per scooter, modeled partial TCO</div></div>
+</div>
+
+<h2>1. Market sizing: where the numbers come from</h2>
+<div class="panel">
+  <p class="chartnote">Base case, daily order / delivery-leg proxies. One order is treated as one delivery leg for sizing; this is a simplifying assumption.</p>
+  <div class="barrow"><div class="barlabel">TAM · all modeled demand</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="barval">1,690,000</div></div>
+  <div class="barrow"><div class="barlabel">SAM · third-party fleet segment</div><div class="track"><div class="fill amber" style="width:30%"></div></div><div class="barval">507,000</div></div>
+  <div class="barrow"><div class="barlabel">SOM · calibrated Zypp share</div><div class="track"><div class="fill teal" style="width:6.51%"></div></div><div class="barval">110,019</div></div>
+  <div class="callout"><p><strong>Important caveat:</strong> the base Zypp share of third-party legs (21.7%) is calibrated from a reported 6–7% Bengaluru last-mile share divided by an assumed 30% third-party fleet share. The close fit to Zypp's reported 5,000+ Bengaluru fleet is a consistency check, not independent validation of TAM or productivity.</p></div>
+</div>
+<div class="twocol">
+  <div class="panel"><h3>Inputs anchored to public reporting</h3>
+    <table><tbody>
+      <tr><td>National quick-commerce orders/day</td><td class="num">9.5M</td></tr>
+      <tr><td>Bengaluru food-delivery orders/day</td><td class="num">500K–600K</td></tr>
+      <tr><td>Zypp Bengaluru fleet reported in FY25</td><td class="num">5,000+</td></tr>
+      <tr><td>Bengaluru market share cited in Nov 2025</td><td class="num">6–7%</td></tr>
+    </tbody></table>
+    <p class="footnote">Sources: <a href="https://www.moneycontrol.com/news/technology-startup/newsletters/MCTech3/tech3-quick-commerce-firms-cross-9m-daily-orders-canva-co-founder-cameron-adams-interview-and-more/">Moneycontrol</a>, <a href="https://www.moneycontrol.com/news/business/startup/slowly-then-suddenly-rapidos-ownly-hits-50000-daily-food-delivery-orders-14012259.html">Moneycontrol</a>, <a href="https://economictimes.indiatimes.com/tech/startups/zypp-electric-posts-rs-455-crore-revenue-in-fy25-up-50-yoy/articleshow/120697896.cms">Economic Times</a>, <a href="https://www.business-standard.com/companies/news/zypp-electric-ipo-fleet-expansion-125112400958_1.html">Business Standard</a>.</p>
+  </div>
+  <div class="panel"><h3>Inputs I had to assume</h3>
+    <table><tbody>
+      <tr><td>Bengaluru share of national quick-commerce</td><td class="num">12%</td></tr>
+      <tr><td>Third-party fleet share of modeled demand</td><td class="num">30%</td></tr>
+      <tr><td>Deliveries per active scooter-day</td><td class="num">26</td></tr>
+      <tr><td>Typical daily fleet availability</td><td class="num">85%</td></tr>
+    </tbody></table>
+    <p class="footnote">These assumptions are editable in <code>excel/zypp_sizing_model.xlsx</code>; the dashboard is a static snapshot and does not update automatically when workbook inputs change.</p>
+  </div>
+</div>
+
+<h2>2. What does the historical 10,000-scooter benchmark require?</h2>
+<div class="panel">
+  <p class="chartnote">Implied market share if 10,000 physical scooters each support 26 deliveries on an active day, with 85% fleet availability.</p>
+  <div class="barrow"><div class="barlabel">Bear case · share of SAM</div><div class="track"><div class="fill red" style="width:60.7%"></div></div><div class="barval red">60.7%</div></div>
+  <div class="barrow"><div class="barlabel">Base case · share of SAM</div><div class="track"><div class="fill amber" style="width:43.6%"></div></div><div class="barval amber">43.6%</div></div>
+  <div class="barrow"><div class="barlabel">Bull case · share of SAM</div><div class="track"><div class="fill teal" style="width:31.6%"></div></div><div class="barval teal">31.6%</div></div>
+  <table style="margin-top:18px"><thead><tr><th>Scenario</th><th class="num">TAM legs/day</th><th class="num">SAM legs/day</th><th class="num">Modeled fleet for Zypp share</th><th class="num">Target's share of TAM</th></tr></thead><tbody>
+    <tr><td>Bear</td><td class="num">1,450,000</td><td class="num">290,000</td><td class="num">1,977</td><td class="num">12.1%</td></tr>
+    <tr><td><strong>Base</strong></td><td class="num">1,690,000</td><td class="num">507,000</td><td class="num">4,978</td><td class="num">13.1%</td></tr>
+    <tr><td>Bull</td><td class="num">2,025,000</td><td class="num">911,250</td><td class="num">8,859</td><td class="num">14.2%</td></tr>
+  </tbody></table>
+  <p class="footnote">Scenario ranges are illustrative, not forecasts. Bear/base/bull each change demand, third-party fleet share, Zypp share, deliveries/day and availability together; they are not probability-weighted outcomes.</p>
+</div>
+
+<h2>3. Partial annual vehicle cost comparison</h2>
+<div class="panel">
+  <p class="chartnote">Reference vehicle assumptions at 100 km per active operating day and 255 active days/year. EV uses a public BaaS reference price and plan; this is not Zypp's negotiated procurement cost.</p>
+  <table><thead><tr><th>Cost item</th><th class="num">Battery-swap EV</th><th class="num">Petrol scooter</th><th>Basis</th></tr></thead><tbody>
+    <tr><td>Vehicle amortization</td><td class="num">₹14,438</td><td class="num">₹23,000</td><td>₹57,750 EV and ₹92,000 petrol capex over 4 years; no subsidy assumed</td></tr>
+    <tr><td>Insurance</td><td class="num">₹4,500</td><td class="num">₹3,800</td><td>Assumptions</td></tr>
+    <tr><td>Energy / fuel</td><td class="num">₹29,988</td><td class="num">₹62,900</td><td>EV ₹2,499/month BaaS, 75 kWh included; petrol ₹111/L and 45 km/L</td></tr>
+    <tr><td>Maintenance</td><td class="num">₹7,650</td><td class="num">₹16,575</td><td>₹0.30/km EV and ₹0.65/km petrol</td></tr>
+    <tr><td><strong>Annual partial cost</strong></td><td class="num"><strong>₹56,576</strong></td><td class="num"><strong>₹106,275</strong></td><td>EV is lower by about ₹49,700/year</td></tr>
+    <tr><td><strong>Cost per km</strong></td><td class="num"><strong>₹2.22</strong></td><td class="num"><strong>₹4.17</strong></td><td>Only the included cost lines are counted</td></tr>
+  </tbody></table>
+  <div class="callout"><p><strong>Don't read this as full fleet unit economics.</strong> Rider earnings, financing, taxes, fleet support, downtime, swap-station overhead, residual value and actual contract pricing are excluded. The BaaS model uses 68 kWh/month at the base case, under the 75 kWh included allowance; above that, the model asks for a real overage / plan price instead of inventing one.</p></div>
+</div>
+
+<h2>4. What I would do before committing more capex</h2>
+<div class="grid">
+  <div class="card gate"><span class="tag public">Step 1</span><h3>Establish the current baseline</h3><p>Get current active fleet by zone, contract-backed trips by hour, delivery productivity, vehicle uptime and actual BaaS terms.</p></div>
+  <div class="card gate"><span class="tag assumption">Step 2 · Proposed pilot</span><h3>Test an incremental cohort</h3><p>Trial 500–1,000 additional scooters only in zones with signed demand and sufficient swap coverage. This is a recommendation, not a Zypp plan.</p></div>
+  <div class="card gate"><span class="tag assumption">Step 3 · Scale gate</span><h3>Release fleet in tranches</h3><p>Scale only if observed contribution per deployed scooter, availability, service level and demand density meet pre-agreed targets.</p></div>
+</div>
+
+<h2>Risks and limitations</h2>
+<div class="panel"><ul class="sources">
+  <li><strong>Market-size proxy:</strong> the 12% Bengaluru quick-commerce share and 30% third-party share are assumptions.</li>
+  <li><strong>Denominator mismatch:</strong> reported market share may not use the same definition as the model's delivery-leg TAM.</li>
+  <li><strong>Incomplete cost base:</strong> partial TCO does not prove company profitability per delivery.</li>
+  <li><strong>Historical target:</strong> the 10,000 figure comes from 2023 and is not represented here as a current company commitment.</li>
+</ul></div>
+
+<footer>
+  <p><strong>Method:</strong> an outside-in scenario analysis built from public reporting and labelled assumptions. Calculated figures are model outputs, not company-reported results. The dashboard is a static snapshot; rerun the Excel workbooks and update this page if the inputs change.</p>
+  <p style="margin-top:8px"><a href="../README.md">Project README</a> · <a href="../data_pack.md">Data pack and sources</a> · <a href="../recommendation_memo.md">Recommendation memo</a> · <a href="../excel/zypp_sizing_model.xlsx">Sizing model</a> · <a href="../excel/zypp_tco_model.xlsx">TCO model</a></p>
+  <p style="margin-top:8px">Independent case study · Not affiliated with Zypp Electric · Prepared October 2026</p>
+</footer>
+</div></body></html>
